@@ -1,0 +1,42 @@
+
+===== 東風戦：ランキング卓 300卓 開始 2003/01/01 00:00 =====
+  持点25000 [1]testai R1500 [2]tsumogiri1 R1500 [3]tsumogiri3 R1500 [4]tsumogiri4 R1500 
+
+  東1局 0本場(リーチ0) 
+    流局
+    [1東]1m6m8m2p2p4p5p7p2s3s8s南白
+    [2南]2m4p5p6p2s4s6s8s9s北北白発
+    [3西]2m8m2p3p3p6p7p9p7s8s9s東西
+    [4北]3m5m6m6m1p7p8p3s7s東西中中
+    [表ドラ]西 [裏ドラ]3m
+    * 1G9p 1d南 2G3p 2D3p 3G北 3D北 4G4p 4D4p 1G9p 1d白 2G8p 2D8p 3G東 3D東 4G8p 
+    * 4D8p 1G北 1D北 2G8s 2D8s 3G3m 3D3m 4G4m 4D4m 1G1s 1d3s 2G中 2D中 3G5s 3D5s 
+    * 4G1m 4D1m 1G9s 1d1m 2G9m 2D9m 3G8m 3D8m 4G発 4D発 1G7m 1d5p 2G8p 2D8p 3G1m 
+    * 3D1m 4G6p 4D6p 1G南 1d7p 2G4s 2D4s 3G2p 3D2p 4G1s 4D1s 1G1s 1d9p 2G7m 2D7m 
+    * 3G4m 3D4m 4G中 4D中 1G7m 1d7m 2G1p 2D1p 3G4m 3D4m 4G6p 4D6p 1G5m 1d7m 2G3s 
+    * 2D3s 3G2m 3D2m 4G4p 4D4p 1G3m 1D3m 2G4s 2D4s 3G3m 3D3m 4G7m 4D7m 1G発 1d南 
+    * 2G白 2D白 3G1s 3D1s 4G9m 4D9m 1G3p 1d8m 2G7s 2D7s 3G9m 3D9m 4G9m 4D9m 1G発 
+    * 1d9p 2G5m 2D5m 3G6s 3D6s 4G東 4D東 1G7p 1D7p 2G7s 2D7s 3G3s 3D3s 4G5p 4D5p 
+    * 1G6s 1d1s 2G2s 2D2s 3G2s 3D2s 4G5s 4D5s 1G1p 1D1p 2G西 2D西 3G5m 3D5m 4G4s 
+    * 4D4s 1G1m 1D1m 2G南 2D南 
+
+  東2局 0本場(リーチ0) testai 5200 tsumogiri3 -5200 
+    40符 三飜ロン リーチ 一発 ドラ1 
+    [1北]6m7m8m9m5p5p6p7p8p3s東南西
+    [2東]9m3p5p1s2s4s5s7s9s東北北白
+    [3南]3m6m9m4p6p8p3s4s4s8s9s西中
+    [4西]2m1p3p4p5p9p1s5s9s南発発中
+    [表ドラ]4m [裏ドラ]北
+    * 2G4p 2D4p 3G1p 3D1p 4G2s 4D2s 1G8m 1d西 2G8m 2D8m 3G4m 3D4m 4G2m 4D2m 1G4m 
+    * 1d東 2G9m 2D9m 3G中 3D中 4G2p 4D2p 1G6s 1d南 2G9s 2D9s 3G1m 3D1m 4G7p 4D7p 
+    * 1G2m 1d8m 2G9p 2D9p 3G3m 3D3m 4G3p 4D3p 1G6s 1d2m 2G9p 2D9p 3G5m 3D5m 4G白 
+    * 4D白 1G7m 1d7m 2G4p 2D4p 3G2s 3D2s 4G発 4D発 1G東 1D東 2G西 2D西 3G1m 3D1m 
+    * 4G1s 4D1s 1G北 1D北 2G8s 2D8s 3G2p 3D2p 4G発 4D発 1G6s 1R 1d3s 2G3m 2D3m 
+    * 3G5m 3D5m 1A 
+
+  ---- 試合結果 ----
+  1位 R34GTR        +21
+  2位 生涯不敗伝説  +4
+  3位 ハノンピアノ  -4
+  4位 ゴルゴ＊１３  -21
+----- 525卓 終了 2003/09/26 13:23 -----

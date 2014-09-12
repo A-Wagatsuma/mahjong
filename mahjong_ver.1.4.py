@@ -1,0 +1,192 @@
+#!/usr/bin/env python
+
+#####################################################
+# ver.1.4                                           #
+#  add:class Player                                 #
+#                                                   #
+#####################################################
+
+import sys
+import fileinput
+import re
+#ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
+def split_str(s, n):
+    #"split string by its length"
+    length = len(s)
+    return [s[i:i+n] for i in range(0, length, n)]
+   
+#手牌    n=Trueでツモ n=Falseで牌を切る
+def count_pai(c, n, l):
+	if(n):		
+		tmp = 1
+	else:
+		tmp = -1
+	
+	if c[1] == "m":
+		index = 0 + int(c[0])	
+	elif c[1] == "p":
+		index = 10 + int(c[0])
+	elif c[1] == "s":
+		index = 20 + int(c[0])
+	elif c[1] == "z":
+		index = 30 + (int(c[0])-1)*2+1
+	else:
+		print("error!")
+	l[index] += tmp
+	return
+
+#print hand
+def p_hand(h):
+    s = []
+    for n in range(44):
+        for i in range(h[n]):
+            s.append(n)
+    return s
+#class Player
+class Player:
+ def __init__(self, hist, reach, menzen, naki, num_call,kawa):
+        self.hist       = hist
+        self.reach      = reach
+        self.menzen     = menzen
+        self.naki       = naki
+        self.num_call   = num_call
+        self.kawa       = kawa
+
+
+
+
+
+k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z', '白' : '5z', '発' :'6z', '中':'7z'}
+sys.stdin = open('/dev/stdin', 'r', encoding='utf-8')
+sys.stdout = open('/dev/stdout','w', encoding='utf-8')
+dealt={}
+p_wind = ''
+dealer = ''
+# [p_wind dealer dealt1 dealt2 dealt3 dealt4 dora ura fu ....]
+o = ['']*8
+hand = ['']*4
+
+
+#print(o)
+
+print()
+for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
+    #reading
+    for v in k2s:
+        line = line.replace(v,k2s[v])
+    m1 = re.match('  (\d\w)\d局',line)
+    if m1:
+        o[0] = m1.group(1)
+    m2 = re.match('    \[(\d)(\d)\w]((\d\w)*)',line)
+    if m2:
+        if m2.group(2) == '1':
+            o[1] = m2.group(1)
+        o[int(m2.group(1))+1] = m2.group(3)
+    m3 = re.match('    \[表ドラ\]((\d\w)+) \[裏ドラ\]((\d\w)+)',line)
+    if m3:
+       o[6]=m3.group(1)
+       o[7]=m3.group(3)
+    m4 = re.match('    \* (\w+( \w+)*)\s$',line)
+    if m4:
+        o.extend(m4.group(1).split(' '))
+
+    #reproduce
+    if o[0] != '' and o[5] != '' and re.match('^$',line):
+        agari = "0"
+        tumoagari = False
+        player = ['','','','']
+        
+        #format class
+        for i in range(4):
+            player[i] = Player([0]*44,False,True,[],0,[])
+            for j in [0,10,20,30,32,34,36,38,40,42]:
+                player[i].hist[j] = -9
+            for c in split_str(o[i+2],2):
+                count_pai(c, True, player[i].hist)
+            ##
+            ##print(','.join([str(n) for n in player[i].hist]))
+            ##
+        for vv in o[8:]:
+            m5 = re.match('(\d)(\w)((\d\w)*)',vv)
+            if m5:
+                turn = int(m5.group(1))-1
+                if m5.group(2) == 'G':
+                    last = m5.group(3)
+                    get = last
+                    tumo = turn
+                    count_pai(last, True, player[turn].hist)
+                
+                elif m5.group(2) == 'D':
+                    last = m5.group(3)
+                    player[turn].kawa.append(last)
+                    count_pai(last, False, player[turn].hist)
+
+                elif m5.group(2) == 'd':
+                    last = m5.group(3)
+                    player[turn].kawa.append(last)
+                    count_pai(last, False, player[turn].hist)
+
+                elif m5.group(2) == 'N':
+                    player[turn].num_call += 1
+                    player[turn].menzen = False
+                    player[turn].naki.append('N')
+                    if m5.group(3) == '':
+                        for i in range(3):
+                            player[turn].naki.append(last.lower())
+                    else:
+                        player[turn].naki.append(last)
+                        for c in split_str(m5.group(3),2):
+                            player[turn].naki.append(c)
+                    count_pai(last, True, player[turn].hist)
+
+                elif m5.group(2) == 'C':
+                    player[turn].num_call += 1
+                    player[turn].menzen = False
+                    player[turn].naki.append('C')
+                    player[turn].naki.append(last)
+                    for c in split_str(m5.group(3),2):
+                        player[turn].naki.append(c)
+                    count_pai(last, True, player[turn].hist)
+
+                elif m5.group(2) == 'K':
+                    player[turn].num_call += 1
+                    #min-kan
+                    if turn != before:
+                        player[turn].menzen = False
+                        player[turn].naki.append('k')
+                        count_pai(last, True, player[turn].hist)
+                    
+                    else:
+                        kakan = False
+                        #ka-kan
+                        for c in player[turn].naki:
+                            if c == last:
+                                kakan = True
+                        if kakan:
+                            ind = player[turn].naki.index(last)
+                            player[turn].naki[ind-1] = 'kk'
+                            player[turn].naki.insert(ind, last)
+                            player[turn].menzen = False
+
+                        
+                        else:
+                            #an-kan
+                            player[turn].naki.append('K')
+
+
+                elif m5.group(2) == 'A':
+                    if int(tumo) == int(turn):
+                        tumoagari = True
+                    agari = turn
+                        
+                elif m5.group(2) == 'R':
+                    player[turn].reach = True
+
+                before = turn
+        for i in range(4):
+            print(p_hand(player[i].hist))
+            print(player[i].naki)
+            print()
+        print()
+        print()
+        o = ['']*8
