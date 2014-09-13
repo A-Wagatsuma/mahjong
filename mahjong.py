@@ -53,26 +53,31 @@ class Player:
         self.num_call   = num_call
         self.kawa       = kawa
  
- def player_move(self, turn, last, move, tile):
+ def player_move(self, turn, last, before, move, tile):
  
     if move == 'G':
-        count_pai(last, True, self.hist)
+        count_pai(tile, True, self.hist)
         pass
 
     elif move == 'D':
         self.kawa.append(last)
-        count_pai(last, False, self.hist)
+        count_pai(tile, False, self.hist)
         pass
 
     elif move == 'd':
         self.kawa.append(last)
-        count_pai(last, False, self.hist)
+        count_pai(tile, False, self.hist)
         pass
 
     elif move == 'N':
+        self.menzen = False
+        for c in range(2):
+            count_pai(last, False, self.hist)
+        
         pass
 
     elif move == 'C':
+        self.menzen = False
         pass
 
     elif move == 'K':
@@ -136,22 +141,15 @@ for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
                 player[i].hist[j] = -9
             for c in split_str(o[i+2],2):
                 count_pai(c, True, player[i].hist)
-            ##
-            ##print(','.join([str(n) for n in player[i].hist]))
-            ##
+
         for vv in o[8:]:
             m5 = re.match('(\d)(\w)((\d\w)*)',vv)
             if m5:
                 turn = int(m5.group(1))-1
+                player[turn].player_move(turn, last, before, m5.group(2),m5.group(3))
                 last = m5.group(3)
-                print(p_hand(player[turn].hist))
-                player[turn].player_move(turn, last, m5.group(2),last)
-                print(p_hand(player[turn].hist))
-                print()
-#for i in range(4):
-#           print(p_hand(player[i].hist))
-#           print(player[i].naki)
-#           print()
+                before = turm
+
         print()
         print()
         o = ['']*8
