@@ -22,11 +22,11 @@ def count_pai(c, n, l):
 	else:
 		tmp = -1
 	
-	if c[1] == "m":
+	if c[1] == "m" or c[1] == "M":
 		index = 0 + int(c[0])	
-	elif c[1] == "p":
+	elif c[1] == "p" or c[1] == "P":
 		index = 10 + int(c[0])
-	elif c[1] == "s":
+	elif c[1] == "s" or c[1] == "S":
 		index = 20 + int(c[0])
 	elif c[1] == "z":
 		index = 30 + (int(c[0])-1)*2+1
@@ -40,7 +40,17 @@ def p_hand(h):
     s = []
     for n in range(44):
         for i in range(h[n]):
-            s.append(n)
+            if n < 10:
+                s.append(str(n) + 'm')
+                pass
+            elif n < 20:
+                s.append(str(n-10) + 'p')
+                pass
+            elif n < 30:
+                s.append(str(n-20) + 's')
+                pass
+            else:
+                s.append(str(int((n-31)/2+1)) + 'z')
     return s
 
 #class Player
@@ -50,7 +60,7 @@ class Player:
         self.reach      = reach
         self.menzen     = menzen
         self.naki       = naki
-        self.num_call   = num_call
+        #self.num_call   = num_call
         self.kawa       = kawa
  
  def player_move(self, turn, last, before, move, tile):
@@ -88,6 +98,23 @@ class Player:
         pass
 
     elif move == 'K':
+        #ka-kan#
+        for c in self.naki:
+            if 'N' in c:
+                if tile in c:
+                    c.append(tile)
+                    c[0] = 'k'
+                    return 0;
+        #an-kan#
+        if turn == before:
+            for c in range(4):
+                count_pai(last, False, self.hist)
+            self.naki.append(['K',last, last, last, last])
+        #min-kan#
+        else:
+            for c in range(3):
+                count_pai(last, False, self.hist)
+            self.naki.append(['k',last, last, last, last])
         pass
 
     elif move == 'A':
@@ -106,7 +133,8 @@ class Player:
 
 
 
-k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z', '白' : '5z', '発' :'6z', '中':'7z'}
+k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
+        '白' : '5z', '発' :'6z', '中':'7z'}
 sys.stdin = open('/dev/stdin', 'r', encoding='utf-8')
 sys.stdout = open('/dev/stdout','w', encoding='utf-8')
 dealt={}
