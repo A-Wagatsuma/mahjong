@@ -9,6 +9,7 @@
 import sys
 import fileinput
 import re
+from Player import Player
 #ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
 def split_str(s, n):
     #"split string by its length"
@@ -53,6 +54,7 @@ def p_hand(h):
                 s.append(str(int((n-31)/2+1)) + 'z')
     return s
 
+<<<<<<< HEAD
 #class Player
 class Player:
  def __init__(self, hist, reach, menzen, naki, num_call,kawa):
@@ -152,6 +154,8 @@ class Player:
                 tmp_list.append(L)
 
     return []
+=======
+>>>>>>> FETCH_HEAD
 
 
 k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
