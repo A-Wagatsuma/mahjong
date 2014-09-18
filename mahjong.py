@@ -67,27 +67,21 @@ class Player:
  
     if move == 'G':
         count_pai(tile, True, self.hist)
-        pass
-
-    elif move == 'D':
+    elif move == 'D' or move == 'd':
         self.kawa.append(last)
         count_pai(tile, False, self.hist)
         self.kawa.append(tile)
-        pass
-
+    '''
     elif move == 'd':
         self.kawa.append(last)
         count_pai(tile, False, self.hist)
         self.kawa.append(tile)
-        pass
-
+    '''
     elif move == 'N':
         self.menzen = False
         for c in range(2):
             count_pai(last, False, self.hist)
         self.naki.append(['N',last, last, last])
-        pass
-
     elif move == 'C':
         tiles = ['C',last]
         self.menzen = False
@@ -95,8 +89,6 @@ class Player:
             count_pai(c, False, self.hist)
             tiles.append(c)
         self.naki.append(tiles)
-        pass
-
     elif move == 'K':
         #ka-kan#
         for c in self.naki:
@@ -115,19 +107,13 @@ class Player:
             for c in range(3):
                 count_pai(last, False, self.hist)
             self.naki.append(['k',last, last, last, last])
-        pass
-
     elif move == 'A':
         if turn == before:
             return -1
         else:
             return 1
-        pass
-
     elif move == 'R':
         self.reach = True
-        pass
-
     return 0
         
         
