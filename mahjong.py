@@ -129,8 +129,43 @@ class Player:
         pass
 
     return 0
+        
+        
+ def check_win(hist, mode): #mode 0:pair mode 1:set
+    tmp_hist = hist
+    tmp_list = []
+    
+    if mode == 0:
+        for i in range(44):
+            if tmp_hist[i] > 1:
+                tmp_hist[i] = tmp_hist[i] - 2
+                L = check_win(tmp_hist, 1)
+                tmp_hist[i] = tmp_hist[i] + 2
+                tmp_list.append(L)
+        return tmp_list
+ 
 
+    elif mode == 1:
+        for i in range(44):
+            if tmp_hist[i] > 2:
+                tmp_hist[i] = tmp_hist[i] - 3
+                L = check_win(tmp_hist, 1)
+                tmp_hist[i] = tmp_hist[i] + 3
+                tmp_list.append(L)
+            
+            
 
+            elif tmp_hist[i] > 0 and tmp_hist[i+1] > 0 and tmp_hist[i+2] > 0:
+                tmp_hist[i] = tmp_hist[i] - 1
+                tmp_hist[i] = tmp_hist[i+1] - 1
+                tmp_hist[i] = tmp_hist[i+2] - 1
+                L = check_win(tmp_hist, 1)
+                tmp_hist[i] = tmp_hist[i] + 1
+                tmp_hist[i] = tmp_hist[i+1] + 1
+                tmp_hist[i] = tmp_hist[i+2] + 1
+                tmp_list.append(L)
+
+    return []
 
 
 k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
