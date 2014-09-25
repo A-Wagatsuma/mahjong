@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #####################################################
-# ver. 1.6                                          #
+# ver. 1.5                                          #
 #                                                   #
 #                                                   #
 #####################################################
@@ -10,14 +10,12 @@ import sys
 import fileinput
 import re
 from Player import Player
-from Turn_info import Turn_info
-from Tile import Tile
 #ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
 def split_str(s, n):
     #"split string by its length"
     length = len(s)
     return [s[i:i+n] for i in range(0, length, n)]
-   
+
 #手牌    n=Trueでツモ n=Falseで牌を切る
 def count_pai(c, n, l):
 	if(n):
@@ -25,11 +23,11 @@ def count_pai(c, n, l):
 	else:
 		tmp = -1
 	
-	if c[1] == "m":
+	if c[1] == "m" or c[1] == "M":
 		index = 0 + int(c[0])
-	elif c[1] == "p":
+	elif c[1] == "p" or c[1] == "P":
 		index = 10 + int(c[0])
-	elif c[1] == "s":
+	elif c[1] == "s" or c[1] == "S":
 		index = 20 + int(c[0])
 	elif c[1] == "z":
 		index = 30 + (int(c[0])-1)*2+1
@@ -44,17 +42,22 @@ def p_hand(h):
     for n in range(44):
         for i in range(h[n]):
             if n < 10:
-                s.append(str(n)+'m')
+                s.append(str(n) + 'm')
+                pass
             elif n < 20:
-                s.append(str(n-10)+'p')
+                s.append(str(n-10) + 'p')
+                pass
             elif n < 30:
-                s.append(str(n-20)+'s')
+                s.append(str(n-20) + 's')
+                pass
             else:
-                s.append(str(int((n-31)/2)+1)+'z')
-
+                s.append(str(int((n-31)/2+1)) + 'z')
     return s
+
+
+
 k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
-        '白' : '5z', '発' :'6z', '中':'7z'}
+    '白' : '5z', '発' :'6z', '中':'7z'}
 sys.stdin = open('/dev/stdin', 'r', encoding='utf-8')
 sys.stdout = open('/dev/stdout','w', encoding='utf-8')
 dealt={}
@@ -66,6 +69,8 @@ hand = ['']*4
 
 
 #print(o)
+
+print()
 for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
     #reading
     for v in k2s:
@@ -80,12 +85,12 @@ for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
         o[int(m2.group(1))+1] = m2.group(3)
     m3 = re.match('    \[表ドラ\]((\d\w)+) \[裏ドラ\]((\d\w)+)',line)
     if m3:
-       o[6]=m3.group(1)
-       o[7]=m3.group(3)
+        o[6]=m3.group(1)
+        o[7]=m3.group(3)
     m4 = re.match('    \* (\w+( \w+)*)\s$',line)
     if m4:
         o.extend(m4.group(1).split(' '))
-
+    
     #reproduce
     if o[0] != '' and o[5] != '' and re.match('^$',line):
         agari = "0"
@@ -99,24 +104,19 @@ for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
                 player[i].hist[j] = -9
             for c in split_str(o[i+2],2):
                 count_pai(c, True, player[i].hist)
-        info = Turn_info(-1,'',-1,'','')
-
-
+        last = -1
+        before = -1
         for vv in o[8:]:
             m5 = re.match('(\d)(\w)((\d\w)*)',vv)
             if m5:
-                info.turn           = int(m5.group(1))-1
-                info.move           = m5.group(2)
-                info.tile           = m5.group(3)
-                end                 = player[info.turn].player_move(info)
-                info.last_tile      = m5.group(3)
-                info.before_player  = info.turn
-
+                turn = int(m5.group(1))-1
+                end = player[turn].player_move(turn, last, before, m5.group(2),m5.group(3))
+                last = m5.group(3)
+                before = turn
+        
         for i in range(4):
             print(p_hand(player[i].hist))
+            
             print(player[i].naki)
-            print()
-
-        print()
         print()
         o = ['']*8

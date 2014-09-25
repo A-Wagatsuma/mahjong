@@ -12,109 +12,97 @@ def int_2_tile(n):
     else:
         return(str(int((n-31)/2+1)) + 'z')
 
-'''
-def check_win(hist, mode): #mode 0:pair mode 1:set
-    tmp_hist = hist
-    tmp_list = []
-    L1 = [[1,'c']]
-    L2 = []
-    L = []
+
+
+def check_win(hist, mode, index): #mode 0:pair mode 1:set
+    ret_tmp = []
+    
+    #pair
     if mode == 0:
         for i in range(44):
-            if tmp_hist[i] > 1:
-                tmp_hist[i] = tmp_hist[i] - 2
-                L.extend(check_win(tmp_hist, 1))
-                tmp_hist[i] = tmp_hist[i] + 2
-        L2 = L1[:]
-        for c in L:
-            #print(c)
-            L1.append(c)
-            #print(L1)
-            tmp_list.append(L1)
-            L1 = L2[:]
-        return tmp_list
-    
-    
-    elif mode == 1:
-        return [[2,'a'], [3,'b']]
-'''
-
-def check_win(hist, mode): #mode 0:pair mode 1:set
-    #print(hist)
-    L1 = []
-    L2 = []
-    Ltmp = []
-    ret_tmp = []
-    if mode == 0:
-        for i in range(10):
             if hist[i] > 1:
-                #雀頭
-                Ltmp = ['pair']
-                for j in range(2):
-                    Ltmp.append(int_2_tile(i))
-                L1.append(Ltmp)
-
-                #面子を探しにいく
+                Ltmp = [['pair', int_2_tile(i), int_2_tile(i)]]
                 hist[i] -= 2
-                set = check_win(hist, 1)
+                set = check_win(hist, 1, 0)
                 hist[i] += 2
-                for c in set:
-                    Ltmp = L1[:]
-                    Ltmp.append(c)
-                if Ltmp != []:
+                if set != []:
+                    for c in set:
+                        L1 = Ltmp[:]
+                        L1.extend(c)
+                        ret_tmp.append(L1)
+                else:
+                    ret_tmp.append(Ltmp)
+        if ret_tmp == []:
+            for i in range(44):
+                if hist[i] > 0:
+                    return [[False]]
+    
+    
+        return ret_tmp
+    #set
+    elif mode == 1:
+        for i in range(index,44):
+            #pung
+            if hist[i] > 2:
+                Ltmp = [['pung', int_2_tile(i), int_2_tile(i), int_2_tile(i)]]
+                hist[i] -= 3
+                set = check_win(hist, 1, i)
+                hist[i] += 3
+                if set != []:
+                    for c in set:
+                        L1 = Ltmp[:]
+                        L1.extend(c)
+                        ret_tmp.append(L1)
+                else:
                     ret_tmp.append(Ltmp)
         
-        return ret_tmp
-                
-    elif mode == 1:
-        for i in range(10):
-            #刻子
-            if hist[i] > 2:
-                Ltmp = ['set1']
-                for j in range(3):
-                    Ltmp.append(int_2_tile(i))
-                L1.append(Ltmp)
-                #他の面子を探しにいく
-                hist[i] -= 3
-                set = check_win(hist, 1)
-                hist[i] += 3
-                for c in set:
-                    Ltmp = L1[:]
-                    Ltmp.append(c)
-                ret_tmp.append(Ltmp)
 
-            #順子
-            elif hist[i] > 0 and hist[i+1] > 0 and hist[i+2] > 0:
-                Ltmp = ['set1']
-                for j in range(3):
-                    Ltmp.append(int_2_tile(i+j))
-                L1.append(Ltmp)
-                #他の面子を探しにいく
+
+
+            if hist[i] > 0 and hist[i+1] > 0 and hist[i+2] > 0:
+                Ltmp = [['chow', int_2_tile(i), int_2_tile(i+1), int_2_tile(i+2)]]
                 hist[i] -= 1
                 hist[i+1] -= 1
                 hist[i+2] -= 1
-                set = check_win(hist, 1)
+                set = check_win(hist, 1, i)
                 hist[i] += 1
                 hist[i+1] += 1
                 hist[i+2] += 1
-                for c in set:
-                    Ltmp = L1[:]
-                    Ltmp.append(c)
-                ret_tmp.append(Ltmp)
+                if set != []:
+                    for c in set:
+                        L1 = Ltmp[:]
+                        L1.extend(c)
+                        ret_tmp.append(L1)
+                else:
+                    ret_tmp.append(Ltmp)
+            
+            
+            
+        if ret_tmp == []:
+            for i in range(44):
+                if hist[i] > 0:
+                    return [[False]]
+            
     
-
         return ret_tmp
 
 
+    #以下テスト用
+    elif mode == 2:
+        return [[['set','1p'], ['set','2p']], [['set','3s'], ['set','4s']]]
+    elif mode == 3:
+        return []
 
+##-----------------------------------------------------------------------------##
 
-list = [0]*10
-list[1] = 3
-list[2] = 1
-list[3] = 1
+list = [0]*44
+list[1] = 2
+list[2] = 3
+list[3] = 3
 list[4] = 3
 
-for L in check_win(list, 0):
-    print(L)
+for L in check_win(list, 0, 0):
+    if not(False in L):
+        print(L)
 
 
