@@ -12,6 +12,7 @@ import re
 from Player import Player
 from Turn_info import Turn_info
 from Tile import Tile
+from Check_win import Check_win
 #ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
 def split_str(s, n):
     #"split string by its length"
@@ -115,6 +116,7 @@ for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
         for i in range(4):
             print(p_hand(player[i].hist))
             print(player[i].naki)
+            
             print()
 
         print()

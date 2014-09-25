@@ -2,6 +2,7 @@
 
 class Tile:
     def __init__(self, c):
+        
         if c[1] == "m" or c[1] == "M":
                 self.index = 0 + int(c[0])        
         elif c[1] == "p" or c[1] == "P":
@@ -23,3 +24,4 @@ class Tile:
             return str(int((self.index-31)/2)+1)+'z'
     def number(self):
         return self.index
+

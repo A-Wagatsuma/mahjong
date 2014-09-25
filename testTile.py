@@ -25,7 +25,13 @@ class TestTile(unittest.TestCase):
             s = str(i)+'z'
             self.assertEqual(i*2+29,Tile(s).number())
             self.assertEqual(s,Tile(s).__str__())
+
+    def testI(self):
         
+        self.assertEqual('7m',Tile(7).number())
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
