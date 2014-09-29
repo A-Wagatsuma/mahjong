@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+
 
 def int_2_tile(n):
     if n < 10:
@@ -66,7 +66,7 @@ class Check_win:
             
 
 
-
+                #chow
                 if hist[i] > 0 and hist[i+1] > 0 and hist[i+2] > 0:
                     Ltmp = [['chow', int_2_tile(i), int_2_tile(i+1), int_2_tile(i+2)]]
                     hist[i] -= 1
@@ -96,17 +96,11 @@ class Check_win:
 
 
 ##--------------------------------------------------------------------------------------##
+## 2m2m2m3m3m4m4m5m5m6m7m8m8m8m
+## 2m2m 2m3m4m 3m4m5m 5m6m7m 8m8m8m
+## 8m8m 2m2m2m 3m4m5m 3m4m5m 6m7m8m
 
-hist=[0]*44
-
-hist[2] = 3
-hist[3] = 2
-hist[4] = 2
-hist[5] = 2
-hist[6] = 1
-hist[7] = 1
-hist[8] = 3
-
+hist = [0,0,3,2,2,2,1,1,3]+[0]*36
 
 for c in Check_win.check_win(hist, 0, 0):
         print(c)
