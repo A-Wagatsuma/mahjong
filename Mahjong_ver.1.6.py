@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #####################################################
-# ver. 1.7                                          #
+# ver. 1.6                                          #
 #                                                   #
 #                                                   #
 #####################################################
@@ -11,9 +11,8 @@ import fileinput
 import re
 from Player import Player
 from Turn_info import Turn_info
-
-from Readdata import Read_data
-
+from Tile import Tile
+from Check_win import Check_win
 #ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
 def split_str(s, n):
     #"split string by its length"
@@ -70,8 +69,24 @@ hand = ['']*4
 #print(o)
 for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
     #reading
-    Read_data(line, o)
-    
+    for v in k2s:
+        line = line.replace(v,k2s[v])
+    m1 = re.match('  (\d\w)\d局',line)
+    if m1:
+        o[0] = m1.group(1)
+    m2 = re.match('    \[(\d)(\d)\w]((\d\w)*)',line)
+    if m2:
+        if m2.group(2) == '1':
+            o[1] = m2.group(1)
+        o[int(m2.group(1))+1] = m2.group(3)
+    m3 = re.match('    \[表ドラ\]((\d\w)+) \[裏ドラ\]((\d\w)+)',line)
+    if m3:
+       o[6]=m3.group(1)
+       o[7]=m3.group(3)
+    m4 = re.match('    \* (\w+( \w+)*)\s$',line)
+    if m4:
+        o.extend(m4.group(1).split(' '))
+
     #reproduce
     if o[0] != '' and o[5] != '' and re.match('^$',line):
         agari = "0"
