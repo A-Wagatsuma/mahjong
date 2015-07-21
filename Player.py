@@ -1,5 +1,6 @@
 #class Player
 from Turn_info import Turn_info
+
 #ref:http://yak-shaver.blogspot.jp/2013/08/blog-post.html
 def split_str(s, n):
     #"split string by its length"
@@ -7,23 +8,24 @@ def split_str(s, n):
     return [s[i:i+n] for i in range(0, length, n)]
 
 def count_pai(c, n, l):
-	if(n):
-		tmp = 1
-	else:
-		tmp = -1
-	
-	if c[1] == "m":
-		index = 0 + int(c[0])
-	elif c[1] == "p":
-		index = 10 + int(c[0])
-	elif c[1] == "s":
-		index = 20 + int(c[0])
-	elif c[1] == "z":
-		index = 30 + (int(c[0])-1)*2+1
-	else:
-		print("error!")
-	l[index] += tmp
-	return
+    if n:
+        tmp = 1
+    else:
+        tmp= -1
+
+    if c[1] is "m" or c[1] is "M":
+        index = int(c[0])
+    elif c[1] is "p" or c[1] is "P":
+        index = 10+int(c[0])
+    elif c[1] is "s" or c[1] is "S":
+        index = 20+int(c[0])
+    elif c[1] is "t":
+        index = 30+int(c[0])
+    else:
+        print("error")
+        print(c,n,l)
+    l[index] += tmp
+
 
 
 class Player:
