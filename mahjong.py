@@ -71,7 +71,7 @@ for line in fileinput.input(openhook=fileinput.hook_encoded('utf-8')):
             for i in range(4):
                 print(p_hand(player[i].hist))
                 print(player[i].naki)
-        #print()
+            print()
 
         
         o = ['']*8

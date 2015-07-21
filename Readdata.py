@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 import re
 
-#k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
-#        '白' : '5z', '発' :'6z', '中':'7z'}
-dic = { 'z' : '4t', 'w' : '1t', 'x' : '2t', 'y' : '3t', 
-        'h' : '5t', 'i' :'6t', 'j':'7t'}
+k2s = { '東' : '1z', '南' : '2z', '西' : '3z', '北' : '4z',
+        '白' : '5z', '発' :'6z', '中':'7z'}
+
 def Read_data(line, o):
-    for v in dic:
-        line = line.replace(v,dic[v])
+    for v in k2s:
+        line = line.replace(v,k2s[v])
     #print(line)
     m1 = re.match('  (\d)\w\d局',line)
     if m1:

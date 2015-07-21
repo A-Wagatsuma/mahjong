@@ -13,13 +13,13 @@ def count_pai(c, n, l):
     else:
         tmp= -1
 
-    if c[1] is "m" or c[1] is "M":
+    if c[1] == "m" or c[1] == "M":
         index = int(c[0])
-    elif c[1] is "p" or c[1] is "P":
+    elif c[1] == "p" or c[1] == "P":
         index = 10+int(c[0])
-    elif c[1] is "s" or c[1] is "S":
+    elif c[1] == "s" or c[1] == "S":
         index = 20+int(c[0])
-    elif c[1] is "t":
+    elif c[1] == "z":
         index = 30+int(c[0])
     else:
         print("error")
